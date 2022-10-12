@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="container"></div>
+    <script type="text/javascript">
+        var cvs = document.createElement("canvas");
+        cvs.width = 700;
+        cvs.height = 250;
+        document.getElementById("container").appendChild(cvs);
+        var ctx = cvs.getContext("2d");
+
+        var baseline = [
+            "top",
+            "hanging",
+            "middle",
+            "alphabetic",
+            "ideographic",
+            "bottom"
+        ];
+
+        for (var i = 0; i < baseline.length; i++) {
+            //ベースラインを変更
+            ctx.textBaseline = baseline[i];
+
+            //Y軸を揃えて文字を描画
+            ctx.font = "italic bold 48pt serif";
+            ctx.fillStyle = "red";
+            ctx.fillText("A", i * 100 + 100, 100);
+
+            //注釈
+            ctx.font = "10pt sans-serif";
+            ctx.fillStyle = "black";
+            ctx.textBaseline = "bottom";
+            ctx.fillText(baseline[i], i * 100 + 100, 200);
+        }
+
+        //横線
+        ctx.font = "bold 10pt sans-serif";
+        ctx.textBaseline = "middle";
+        ctx.fillText("baseline", 0, 100);
+        ctx.fillStyle = "gray";
+        ctx.fillRect(80, 100, 10000, 1);
+    </script>
+</body>
+
+</html>

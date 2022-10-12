@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>タイトル（適宜書きなおして下さい）</title>
+</head>
+
+<body>
+    <div id="container"></div>
+    <script type="text/javascript">
+        var cvs = document.createElement("canvas");
+        cvs.width = 500;
+        cvs.height = 500;
+        document.getElementById("container").appendChild(cvs);
+        var ctx = cvs.getContext("2d");
+
+        /* ここから描画処理 */
+        ctx.fillStyle = "red";
+        ctx.fillRect(100, 100, 200, 200);
+        ctx.fillStyle = "white";
+        ctx.fillRect(175, 220, 50, 20);
+        ctx.fillStyle = "skyblue";
+        ctx.fillRect(150, 150, 100, 70);
+        ctx.fillStyle = "blue";
+        ctx.fillRect(100, 300, 200, 70);
+        ctx.fillStyle = "white";
+        ctx.fillRect(150, 350, 100, 20);
+
+        ctx.strokeStyle = "white";
+        ctx.lineWidth = 2;
+        ctx.font = " bold 24pt sans-serif";
+        ctx.strokeText("I'm not SPY!", 110, 280);
+    </script>
+</body>
+
+</html>

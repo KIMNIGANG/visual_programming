@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="container"></div>
+    <script type="text/javascript">
+        var cvs = document.createElement("canvas");
+        cvs.width = 500;
+        cvs.height = 250;
+        document.getElementById("container").appendChild(cvs);
+        var ctx = cvs.getContext("2d");
+
+        ctx.fillStyle = "red";
+        ctx.strokeStyle = "blue";
+        ctx.lineWidth = 3;
+
+        ctx.font = "italic bold 48pt sans-serif";
+        ctx.fillText("Hello world!", 50, 100);
+        ctx.strokeText("Hello world!", 50, 200);
+    </script>
+</body>
+
+</html>

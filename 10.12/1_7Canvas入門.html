@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>hello</h1>
+</body>
+
+<div id="container"></div>
+<script type="text/javascript">
+    var cvs = document.createElement("canvas");
+    cvs.width = 500;
+    cvs.height = 500;
+    document.getElementById("container").appendChild(cvs);
+    var ctx = cvs.getContext("2d");
+
+    ctx.fillStyle = "red";
+    ctx.strokeStyle = "#0080ff";
+    ctx.lineWidth = 10;
+
+    ctx.fillRect(100, 100, 200, 200);
+    ctx.strokeRect(200, 200, 200, 200);
+</script>
+
+</html>
