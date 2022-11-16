@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="text">
+    </div>
+</body>
+<script type="text/javascript">
+    let array = ["red", "yellow", "blue", "black", "green", "gray", "skyblue", "purple"];
+    let div = document.getElementById("text");
+
+    function insert(key) {
+        console.log(key.key.toUpperCase());
+        let Tag = document.createElement("font");
+        Tag.color = array[Math.floor(Math.random() * 7)];
+        Tag.size = 5;
+        Tag.innerHTML = key.key.toUpperCase();
+        div.insertBefore(Tag, div.children[div.children.length]);
+    }
+    window.addEventListener("keydown", function (e) {//第1引数にイベントオブジェクトが代入される
+        insert(e)
+    });
+</script>
+
+</html>

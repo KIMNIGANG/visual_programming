@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>5</title>
+</head>
+
+<body>
+    <div id="container"></div>
+    <script type="text/javascript">
+        var cvs = document.createElement("canvas");
+        cvs.width = 1500;
+        cvs.height = 500;
+        document.getElementById("container").appendChild(cvs);
+        var ctx = cvs.getContext("2d");
+        ctx.lineWidth = 10;
+
+        let startX = 200;
+        let startY = 120;
+
+        ctx.strokeStyle = "skyblue";
+        ctx.beginPath();
+        ctx.moveTo(startX, startY);
+        ctx.arc(120, 120, 80, 0, 2 * Math.PI);
+        ctx.stroke();
+        ctx.strokeStyle = "yellow";
+        ctx.beginPath();
+        ctx.moveTo(startX + 100, startY + 80);
+        ctx.arc(220, 200, 80, 0, 2 * Math.PI);
+        ctx.stroke();
+        ctx.strokeStyle = "black";
+        ctx.beginPath();
+        ctx.moveTo(startX + 180, startY);
+        ctx.arc(300, 120, 80, 0, 2 * Math.PI);
+        ctx.stroke();
+        ctx.strokeStyle = "green";
+        ctx.beginPath();
+        ctx.moveTo(startX + 280, startY + 80);
+        ctx.arc(startX + 200, startY + 80, 80, 0, 2 * Math.PI);
+        ctx.stroke();
+        ctx.strokeStyle = "red";
+        ctx.beginPath();
+        ctx.moveTo(startX + 360, startY);
+        ctx.arc(startX + 280, 120, 80, 0, 2 * Math.PI);
+        ctx.stroke();
+
+        ctx.lineWidth = 5;
+
+        let cL = ['skyblue', 'yellow', 'black', 'green', 'red'];
+        let i = 0;
+
+        for (let index = 100; index < 500; index += 30) {
+
+            ctx.strokeStyle = cL[i++];
+            if (i == 5) {
+                i = 0;
+            }
+            ctx.beginPath();
+            ctx.arc(index, 350, 20, 0, 2 * Math.PI);
+            ctx.stroke();
+        }
+
+    </script>
+</body>
+
+</html>

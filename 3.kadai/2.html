@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>canvas dragging tutorial</title>
+    <style>
+        #canvas {
+            background: white;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas" width="640" height="480"></canvas>
+    <script>
+        var canvas = document.getElementById("canvas");
+        var ctx = canvas.getContext('2d');
+        var x, y, relX, relY, objX, objY, obj2X, obj2Y, rx, ry;
+        var objWidth, objHeight;
+        var obj2Width, obj2Height;
+        var dragging = false;
+        var dragging2 = false;
+        let boom = false;
+
+        function init() {
+            objWidth = 100;
+            objHeight = 100;
+
+            obj2Width = 100;
+            obj2Height = 100;
+
+            objX = canvas.width / 3 - objWidth / 2;
+            objY = canvas.height / 3 - objHeight / 2;
+
+            obj2X = canvas.width / 2 - objWidth / 2;
+            obj2Y = canvas.height / 2 - objHeight / 2;
+
+            drawRect();
+        }
+
+        function onDown(e) {
+            var offsetX = canvas.getBoundingClientRect().left;
+            var offsetY = canvas.getBoundingClientRect().top;
+
+            x = e.clientX - offsetX;
+            y = e.clientY - offsetY;
+
+            if (objX < x && (objX + objWidth) > x && objY < y && (objY + objHeight) > y) {
+                dragging = true;
+                relX = objX - x;
+                relY = objY - y;
+            }
+            if (obj2X < x && (obj2X + obj2Width) > x && obj2Y < y && (obj2Y + obj2Height) > y) {
+                dragging2 = true;
+                relX = obj2X - x;
+                relY = obj2Y - y;
+            }
+        }
+
+        function onMove(e) {
+            var offsetX = canvas.getBoundingClientRect().left;
+            var offsetY = canvas.getBoundingClientRect().top;
+
+            x = e.clientX - offsetX;
+            y = e.clientY - offsetY;
+
+            if (dragging) {
+                objX = x + relX;
+                objY = y + relY;
+                drawRect();
+            }
+            if (dragging2) {
+                obj2X = x + relX;
+                obj2Y = y + relY;
+                drawRect();
+            }
+        }
+
+        function onUp(e) {
+            dragging = false;
+            dragging2 = false;
+        }
+
+        function drawRect() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.beginPath();
+            // ctx.fillStyle = "yellow"
+            ctx.rect(objX, objY, objWidth, objHeight);
+            ctx.strokeStyle = "black"
+            ctx.stroke();
+            ctx.rect(obj2X, obj2Y, obj2Width, obj2Height);
+            ctx.strokeStyle = "black"
+            ctx.stroke();
+        }
+
+        function changeColor() {
+            rx = obj2X - objX;
+            ry = objY - obj2Y;
+            let subX, subY;
+            requestAnimationFrame(changeColor);
+
+
+            if (rx < objWidth && ry < objHeight && rx > -100 && ry > - 100) {
+                boom = true;
+            } else {
+                boom = false;
+            }
+
+            if (boom == true) {
+
+                ctx.fillStyle = "lightgrey";
+                if (rx >= 0 && ry < 0) {
+                    ctx.fillRect(obj2X, obj2Y, objWidth - Math.abs(rx), objHeight - Math.abs(ry));
+                } else if (rx >= 0 && ry >= 0) {
+                    ctx.fillRect(objX + objWidth, objY, -(objWidth - Math.abs(rx)), objHeight - Math.abs(ry));
+                } else if (rx < 0 && ry >= 0) {
+                    ctx.fillRect(objX, objY, (objWidth - Math.abs(rx)), objHeight - Math.abs(ry));
+                } else {
+                    ctx.fillRect(objX, objY + objHeight, (objWidth - Math.abs(rx)), -(objHeight - Math.abs(ry)));
+
+                }
+                // else {
+                //     ctx.fillRect(objX, objY, objWidth - Math.abs(rx), objHeight - Math.abs(ry));
+                // }
+            }
+        }
+
+
+        canvas.addEventListener('mousedown', onDown, false);
+        canvas.addEventListener('mousemove', onMove, false);
+        canvas.addEventListener('mouseup', onUp, false);
+        init();
+        requestAnimationFrame(changeColor);
+    </script>
+</body>
+
+</html>

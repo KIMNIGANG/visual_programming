@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="container"></div>
+    <script type="text/javascript">
+        var cvs = document.createElement("canvas");
+        cvs.width = 500;
+        cvs.height = 900;
+        document.getElementById('container').appendChild(cvs);
+        var ctx = cvs.getContext("2d");
+
+        var img = document.createElement("img");
+        function onLoad() {
+            ctx.drawImage(img, 0, 0);
+            var bmp = ctx.getImageData(0, 0, 500, 900);
+            for (var y = 0, i = 0; y < 900; y++) {
+                for (var x = 0; x < 500; x++, i += 4) {
+                    if (y >= 280 && y <= 625 && x >= 100 && x <= 420) {
+                        var value = (bmp.data[i] + bmp.data[i + 1] + bmp.data[i + 2]) / 3;
+                        bmp.data[i] = bmp.data[i + 1] = bmp.data[i + 2] = value;
+                    } else {
+                        var value = (bmp.data[i] + bmp.data[i + 1] + bmp.data[i + 2]) / 10;
+
+                        bmp.data[i] = bmp.data[i + 1] = bmp.data[i + 2] = value;
+
+                    }
+
+                    // var value = (bmp.data[i] + bmp.data[i + 1] + bmp.data[i + 2]) / 3;
+                    // bmp.data[i] = bmp.data[i + 1] = bmp.data[i + 2] = value;
+                }
+            }
+            ctx.putImageData(bmp, 0, 0);
+        }
+
+        img.addEventListener("load", onLoad, false);
+        img.src = "IMG_1734.jpg";
+
+    </script>
+</body>
+
+</html>

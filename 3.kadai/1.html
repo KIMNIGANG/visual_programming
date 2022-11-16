@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="container"></div>
+    <script type="text/javascript">
+        var cvs = document.createElement("canvas");
+        cvs.width = 500;
+        cvs.height = 500;
+        document.getElementById('container').appendChild(cvs);
+
+        var ctx = cvs.getContext("2d");
+
+        let letters = ['H', 'Y', 'E', 'O', 'N', ' ', 'K', 'A', 'N', 'G'];
+
+        let texts = [];
+
+        for (let i = 0; i < 10; i++) {
+            let text = new Circle();
+            text.x = 500 / 8 + i * 40;
+            text.y = 500 / 5 - 20;
+            text.text = letters[i];
+            texts.push(text);
+        }
+
+        var gravity = 1.5; //重力
+        var bounce = -0.7; //はねかえり
+        var bottom = 500; //床のY座標
+
+        var circle = new Circle();
+        circle.x = 500 / 2;
+        circle.y = 500 / 2;
+
+        function Circle() {
+            var me = this;
+
+            this.x = 0;
+            this.y = 0;
+            this.vy = 5;
+            this.text = 'a';
+            this.isDragged = false;
+
+            this.draw = function (ctx) {
+                ctx.beginPath();
+                ctx.fillStyle = "red";
+
+                ctx.font = "italic bold 48pt sans-serif";
+                ctx.fillText(me.text, me.x, me.y);
+
+            };
+
+            window.addEventListener("mouseup", function () {
+                me.isDragged = false;
+            });
+
+
+        }
+
+        function render() {
+            ctx.clearRect(0, 0, 500, 500);
+            for (let i = 0; i < 10; i++) {
+                let text = texts[i];
+                if (!text.isDragged) {
+                    text.vy += gravity + Math.random() * 2;
+                    text.y += text.vy;
+                    if (text.y + 0.5 > bottom) {
+                        text.y = bottom;
+                        text.vy *= bounce;
+                    }
+                }
+                text.draw(ctx);
+            }
+
+            ctx.strokeStyle = "black";
+            ctx.beginPath();
+            ctx.moveTo(0, bottom);
+            ctx.lineTo(500, bottom);
+            ctx.stroke();
+        }
+
+        setInterval(render, 30);
+    </script>
+</body>
+
+</html>
