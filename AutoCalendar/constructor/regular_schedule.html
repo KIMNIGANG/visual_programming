@@ -5,11 +5,11 @@
     <meta charset='utf-8' />
     <link href='./node_modules/fullcalendar/main.css' rel='stylesheet' />
     <script src='./node_modules/fullcalendar/main.js'></script>
-    <h1> 
+    <h1>
         AutoCalender
         <img id="logoutIcon" src="logoutIcon.png">
     </h1>
-    
+
     <script>
         /**
          * 現段階でのtodo
@@ -27,7 +27,7 @@
          * 引数：なし
          * 返り値：なし
         */
-       
+
         const now = new Date();
         const GetDate = {
             Year: now.getFullYear(),
@@ -44,7 +44,7 @@
          * 返り値：連想配列の配列
          * [{title: イベント名, start:イベント開始時間, end: イベント終了時間, editable: 固定された用事かどうか, overlap: その予定の上に重ねれるか}]
         */
-        function GetEvents(id){
+        function GetEvents(id) {
             // 仮置きのeventを用意
             const events = [{
                 title: "test",
@@ -79,10 +79,10 @@
                 selectable: true,
                 nowIndicator: true,
                 events: GetEvents(0),
-                
+
                 // イベントがクリックされたとき
                 eventClick: function (jsEvent) {
-                    if(window.confirm("このイベントを削除しますか？")){
+                    if (window.confirm("このイベントを削除しますか？")) {
                         jsEvent.event.remove();
                     }
                 },
@@ -93,7 +93,7 @@
         });
 
         logoutIcon = document.getElementById("logoutIcon");
-        logoutIcon.addEventListener("click", function(e) {
+        logoutIcon.addEventListener("click", function (e) {
             var result = window.confirm("ログアウトしますか？");
             if (result) {
                 location.href = "after_login.html";
@@ -145,8 +145,11 @@
         <option value="4"> 5 </option>
     </select><br>
     <button id="Todo_add"> 追加 </button>
-    <br/>
-    <br/>
+    <button id="test_add"> testAdd </button>
+    <h3 id="time"></h3>
+    <h3 id="schedule"></h3>
+    <br />
+    <br />
 
     <script>
         let plan = {
@@ -183,7 +186,7 @@
             else if (plan.time_end.value == "") {
                 alert("終了時間を入力してください");
             }
-            else if((plan.date_end.value < plan.date_start.value) || ((plan.date_end.value == plan.date_start.value) && (plan.time_end.value < plan.time_start.value))){
+            else if ((plan.date_end.value < plan.date_start.value) || ((plan.date_end.value == plan.date_start.value) && (plan.time_end.value < plan.time_start.value))) {
                 alert("終了日時は開始日時よりも後にしてください");
             }
             else {
@@ -197,7 +200,7 @@
                         break;
                     }
                 }
-                if(flag == 0){ //イベントの重複がなかったら
+                if (flag == 0) { //イベントの重複がなかったら
                     calendar.addEvent(
                         {
                             title: plan.title.value,
@@ -242,7 +245,7 @@
             else {
                 const events = calendar.getEvents();
                 //開始時間の昇順
-                events.sort((a,b) => a.start - b.start);
+                events.sort((a, b) => a.start - b.start);
                 let time_start = new Date(GetDate.Year, (GetDate.Month - 1), GetDate.Date, GetDate.Hour);
                 time_start.setHours(time_start.getHours() + 1);
                 let time_end = new Date(GetDate.Year, (GetDate.Month - 1), GetDate.Date, GetDate.Hour);
@@ -253,11 +256,11 @@
                     alert("締め切り時間は今よりも後にしてください");
                 }
                 else {
-                // 現段階のプログラムでは優先度にかかわらず、今の時間から締め切りまでにTodoを入れれたら入れるという感じ
-                    while(1){
+                    // 現段階のプログラムでは優先度にかかわらず、今の時間から締め切りまでにTodoを入れれたら入れるという感じ
+                    while (1) {
                         let flag = 0;
                         for (let i = 0; i < events.length; i++) {
-                            if((time_start >= events[i].start && time_start < events[i].end) || (time_end > events[i].start && time_end <= events[i].end) || (time_start >= events[i].start && time_end <= events[i].end)){
+                            if ((time_start >= events[i].start && time_start < events[i].end) || (time_end > events[i].start && time_end <= events[i].end) || (time_start >= events[i].start && time_end <= events[i].end)) {
                                 flag = 1;
                                 time_start = events[i].end;
                                 time_end = events[i].end;
@@ -266,14 +269,14 @@
                                 break;
                             }
                         }
-                        if(flag == 0){
+                        if (flag == 0) {
                             break;
                         }
-                        if(time_start >= deadline){
+                        if (time_start >= deadline) {
                             break;
                         }
                     }
-                    if(time_start >= deadline){
+                    if (time_start >= deadline) {
                         alert("締め切りまで忙しく、Todoを入れることができませんでした。")
                     }
                     else {
@@ -293,5 +296,6 @@
 
     </script>
 </body>
+<script type="module" src="../js/sendData.js"></script>
 
 </html>

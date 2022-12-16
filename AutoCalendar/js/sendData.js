@@ -1,10 +1,12 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
-
-//data send
 import {
   doc,
+  collection,
+  getDocs,
+  getDoc,
+  getDocFromCache,
   setDoc,
+  getFirestore,
 } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -18,4 +20,21 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const auth = getAuth();
+const db = getFirestore(app);
+
+//ここのtestuidのところにuserのuidを入れる
+const userRef = doc(db, "userData", "testuid1234341234");
+const docsnap = await getDoc(userRef);
+
+const test_add_btn = document.getElementById("test_add");
+
+document.getElementById("time").innerHTML = docsnap.data().予定;
+document.getElementById("schedule").innerHTML = docsnap.data().時間;
+
+test_add_btn.addEventListener("click", function () {
+  console.log("hi");
+  console.log(docsnap.data());
+  setDoc(doc(db, "userData", "testuid13412451"), {
+    name: "kang",
+  });
+});
